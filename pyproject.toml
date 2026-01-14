@@ -31,38 +31,21 @@ Documentation = "https://github.com/unknown/misprint#readme"
 Issues = "https://github.com/unknown/misprint/issues"
 Source = "https://github.com/unknown/misprint"
 
-[tool.hatch.version]
-path = "src/misprint/__init__.py"
 
-[tool.hatch.envs.default]
-dependencies = [
+[dependency-groups]
+dev = [
+  "tox",
   "pre-commit",
   "coverage[toml]>=6.5",
   "pytest",
   "pytest-cov",
   "pytest-clarity",
   "pytest-pretty",
+  "pytest-unused-fixtures; python_version>='3.9'",
 ]
 
-[tool.hatch.envs.default.scripts]
-test = "pytest {args:tests}"
-cov-report = ["- coverage combine", "coverage report"]
-cov = ["test", "cov-report"]
-pre-commit-all = "pre-commit run -a"
-all = ["cov", "pre-commit-all"]
-
-[[tool.hatch.envs.all.matrix]]
-python = ["3.10", "3.11", "3.12", "3.13", "3.14"]
-
-[tool.hatch.envs.lint]
-detached = true
-dependencies = ["mypy>=1.6.1", "ruff>=0.11.2"]
-
-[tool.hatch.envs.lint.scripts]
-typing = "mypy --cache-dir /dev/null {args:src}"
-style = ["ruff format {args:.}", "ruff check --diff {args:.}"]
-fmt = ["ruff format {args:.}", "ruff check --fix {args:.}"]
-all = ["style", "typing"]
+[tool.hatch.version]
+path = "src/misprint/__init__.py"
 
 [tool.pytest.ini_options]
 addopts = [
@@ -170,16 +153,3 @@ module = "tests.*"
 allow_untyped_defs = true
 allow_incomplete_defs = true
 allow_untyped_calls = true
-
-[tool.coverage.run]
-source_pkgs = ["misprint", "tests"]
-branch = true
-parallel = true
-omit = ["src/misprint/__about__.py"]
-
-[tool.coverage.paths]
-misprint = ["src/misprint", "*/misprint/src/misprint"]
-tests = ["tests", "*/misprint/tests"]
-
-[tool.coverage.report]
-exclude_lines = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]
