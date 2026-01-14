@@ -45,6 +45,7 @@ class Misprinter:
     ...     == "printing <'database password' (value removed)>"
     ... )
     """
+
     REPLACE_STR: ClassVar[str] = "*" * 4
     _UNWANTED: ClassVar[Iterable[str | re.Pattern[str]]] = frozenset(
         s for obj in ("", None) for s in (repr(obj), str(obj))

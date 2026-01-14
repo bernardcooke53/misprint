@@ -54,12 +54,12 @@ python = ["3.10", "3.11", "3.12", "3.13", "3.14"]
 
 [tool.hatch.envs.lint]
 detached = true
-dependencies = ["black>=23.10.0", "mypy>=1.6.1", "ruff>=0.1.1"]
+dependencies = ["mypy>=1.6.1", "ruff>=0.11.2"]
 
 [tool.hatch.envs.lint.scripts]
 typing = "mypy --cache-dir /dev/null {args:src}"
-style = ["ruff {args:.}", "black --check --diff {args:.}"]
-fmt = ["black {args:.}", "ruff --fix {args:.}", "style"]
+style = ["ruff format {args:.}", "ruff check --diff {args:.}"]
+fmt = ["ruff format {args:.}", "ruff check --fix {args:.}"]
 all = ["style", "typing"]
 
 [tool.pytest.ini_options]
@@ -77,14 +77,7 @@ python_files = ["tests/test_*.py", "tests/**/test_*.py"]
 [tool.bandit]
 targets = ["src"]
 
-[tool.black]
-target-version = ["py38"]
-line-length = 88
-skip-string-normalization = true
-
-[tool.ruff]
-target-version = "py38"
-line-length = 88
+[tool.ruff.lint]
 select = [
   "A",
   "ARG",
@@ -132,18 +125,18 @@ unfixable = [
   "F401",
 ]
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 known-first-party = ["misprint"]
 
-[tool.ruff.flake8-tidy-imports]
+[tool.ruff.lint.flake8-tidy-imports]
 ban-relative-imports = "all"
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 # Tests can use magic values, assertions, and unused variables (e.g. as fixtures)
 "tests/**/*" = ["PLR2004", "S101", "ARG001"]
 
 [tool.mypy]
-python_version = 3.8
+python_version = "3.10"
 
 mypy_path = "src"
 

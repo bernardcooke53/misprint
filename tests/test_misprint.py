@@ -155,9 +155,9 @@ def test_log_record_is_masked_with_simple_args(default_misprint_filter, rec, mas
             default_misprint_filter.REPLACE_STR for _ in rec.args
         ) == default_misprint_filter.mask(rec.getMessage())
     elif isinstance(rec.args, dict):
-        assert rec.msg % {
-            k: default_misprint_filter.REPLACE_STR for k in rec.args.keys()
-        } == default_misprint_filter.mask(rec.getMessage())
+        assert rec.msg % dict.fromkeys(
+            rec.args.keys(), default_misprint_filter.REPLACE_STR
+        ) == default_misprint_filter.mask(rec.getMessage())
 
 
 @pytest.mark.parametrize(
