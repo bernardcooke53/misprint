@@ -35,6 +35,7 @@ Source = "https://github.com/unknown/misprint"
 [dependency-groups]
 dev = [
   "tox",
+  "ruff",
   "pre-commit",
   "coverage[toml]>=6.5",
   "pytest",
