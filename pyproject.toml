@@ -36,6 +36,7 @@ Source = "https://github.com/unknown/misprint"
 dev = [
   "tox",
   "ruff",
+  "mypy",
   "pre-commit",
   "coverage[toml]>=6.5",
   "pytest",
